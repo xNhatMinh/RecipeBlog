@@ -1,7 +1,7 @@
 require('../models/database')
 const fs = require('fs'); // File System để đọc file .json
 const category = require('../models/category')
-const recipe = require('../models/recipe')
+const recipe = require('../models/recipe');
 
 /**
  * GET /
@@ -45,6 +45,22 @@ exports.exploreCategories = async (req, res) => {
 }
 
 
+/**
+ * GET /recipe/:id
+ * Recipe
+ */
+exports.exploreRecipe = async (req, res) => {
+  try {
+    let recipeId = req.params.id;
+
+    const result = await recipe.findById(recipeId)
+    res.render("recipe", {title: 'Cooking Blog - Recipe', result});
+  } catch (error) {
+    res.status(500).send({
+      message: error.message || 'Error Occured'
+    }) 
+  }
+}
 
 
 // async function insertToMyCategoryData(){
